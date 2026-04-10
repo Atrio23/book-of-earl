@@ -1,11 +1,48 @@
 /* ==========================================================================
-   Mac OS X Boot Sequence Animations
-   Imported into Next.js app for a classic Mac startup animation overlay.
+   Mac OS X / iMac G5 Boot Sequence Animations
+   Classic CRT-style startup with scanlines, chime flash, and welcome text.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
    Keyframe Animations
    -------------------------------------------------------------------------- */
+
+/* CRT "turn on" effect: bright horizontal line expands to full screen */
+@keyframes bootScreenOn {
+  0% {
+    transform: scaleY(0.005) scaleX(0.3);
+    filter: brightness(12);
+  }
+  30% {
+    transform: scaleY(0.005) scaleX(1);
+    filter: brightness(5);
+  }
+  50% {
+    transform: scaleY(0.4) scaleX(1);
+    filter: brightness(2);
+  }
+  75% {
+    transform: scaleY(1) scaleX(1);
+    filter: brightness(1.3);
+  }
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
+/* Apple logo glow: subtle pulsing drop-shadow behind the SVG */
+@keyframes bootGlow {
+  0% {
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0));
+  }
+  50% {
+    filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.25));
+  }
+  100% {
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0));
+  }
+}
 
 /* Progress bar fill: smoothly grows from 0% to 100% width */
 @keyframes bootProgressFill {
@@ -17,61 +54,56 @@
   }
 }
 
-/* Apple logo glow: subtle pulsing white glow behind the logo */
-@keyframes bootGlow {
-  0% {
-    box-shadow: 0 0 40px rgba(255, 255, 255, 0);
-  }
-  50% {
-    box-shadow: 0 0 40px rgba(255, 255, 255, 0.15);
-  }
-  100% {
-    box-shadow: 0 0 40px rgba(255, 255, 255, 0);
-  }
-}
-
-/* Screen flicker: simulates the initial "screen turning on" CRT flicker */
-@keyframes bootFlicker {
+/* Chime flash: brief white radial burst synced with startup chime */
+@keyframes bootChimeFlash {
   0% {
     opacity: 0;
   }
-  5% {
-    opacity: 1;
-  }
-  7% {
-    opacity: 0.97;
-  }
-  10% {
-    opacity: 1;
+  20% {
+    opacity: 0.8;
   }
   100% {
-    opacity: 1;
+    opacity: 0;
   }
 }
 
-/* CRT "turn on" effect: starts as a bright horizontal line, expands to full screen */
-@keyframes bootScreenOn {
+/* Apple logo entrance: fade in with slight scale up */
+@keyframes bootLogoFadeIn {
   0% {
-    transform: scaleY(0.005) scaleX(0.5);
-    filter: brightness(10);
-  }
-  40% {
-    transform: scaleY(0.005) scaleX(1);
-    filter: brightness(3);
-  }
-  70% {
-    transform: scaleY(1) scaleX(1);
-    filter: brightness(1.5);
+    opacity: 0;
+    transform: scale(0.95);
   }
   100% {
+    opacity: 1;
     transform: scale(1);
-    filter: brightness(1);
+  }
+}
+
+/* Welcome text fade-in: gentle upward drift with opacity */
+@keyframes bootWelcomeFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Scanline scroll: subtle vertical movement of the CRT lines */
+@keyframes bootScanlineScroll {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 4px;
   }
 }
 
 /* --------------------------------------------------------------------------
    Boot Overlay
-   Full-screen fixed overlay with CRT-like glow
+   Full-screen fixed overlay with CRT-like inset shadow for depth
    -------------------------------------------------------------------------- */
 
 .boot-overlay {
@@ -84,7 +116,9 @@
   justify-content: center;
   background: #1a1a1a;
   box-shadow: inset 0 0 120px rgba(0, 0, 0, 0.8);
-  transition: opacity 0.6s ease;
+  transition:
+    opacity 0.8s ease,
+    background-color 0.5s ease;
 }
 
 /* Fade-out state: overlay becomes invisible and non-interactive */
@@ -99,12 +133,53 @@
    -------------------------------------------------------------------------- */
 
 .boot-screen-on {
-  animation: bootScreenOn 0.5s ease-out forwards;
+  animation: bootScreenOn 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+/* --------------------------------------------------------------------------
+   CRT Scanlines
+   Repeating horizontal line overlay to simulate a CRT monitor
+   -------------------------------------------------------------------------- */
+
+.boot-scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.06) 2px,
+    rgba(0, 0, 0, 0.06) 4px
+  );
+  animation: bootScanlineScroll 0.15s linear infinite;
+}
+
+/* --------------------------------------------------------------------------
+   Chime Flash
+   Brief white radial burst that accompanies the startup chime
+   -------------------------------------------------------------------------- */
+
+.boot-chime-flash {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0.4) 30%,
+    rgba(255, 255, 255, 0.05) 60%,
+    transparent 80%
+  );
+  z-index: 5;
+  animation: bootChimeFlash 0.4s ease-out forwards;
 }
 
 /* --------------------------------------------------------------------------
    Screen Glow
-   Radial gradient overlay behind the Apple logo for a subtle monitor glow
+   Radial gradient glow behind the Apple logo for subtle monitor warmth
    -------------------------------------------------------------------------- */
 
 .boot-screen-glow {
@@ -123,14 +198,15 @@
 
 /* --------------------------------------------------------------------------
    Apple Logo
-   Centered logo with a subtle pulsing glow animation
+   Centered logo with fade-in entrance and pulsing glow
    -------------------------------------------------------------------------- */
 
 .boot-apple-logo {
   position: relative;
   z-index: 1;
-  animation: bootGlow 2s ease-in-out infinite;
-  border-radius: 50%;
+  animation:
+    bootLogoFadeIn 0.5s ease-out forwards,
+    bootGlow 2.5s ease-in-out 0.5s infinite;
 }
 
 /* --------------------------------------------------------------------------
@@ -145,6 +221,8 @@
   background: #444;
   margin-top: 24px;
   overflow: hidden;
+  position: relative;
+  z-index: 1;
 }
 
 /* Fill: the animated inner bar with a blue gradient */
@@ -152,5 +230,28 @@
   height: 100%;
   border-radius: 9999px;
   background: linear-gradient(90deg, #6cb3fa, #3d80df);
-  animation: bootProgressFill 2s ease-in-out forwards;
+  animation: bootProgressFill 2.5s ease-in-out forwards;
+}
+
+/* --------------------------------------------------------------------------
+   Welcome Text
+   Classic Mac "Welcome" in Myriad Pro / system font style
+   -------------------------------------------------------------------------- */
+
+.boot-welcome-text {
+  position: relative;
+  z-index: 1;
+  margin-top: 32px;
+  font-family:
+    "Myriad Pro",
+    "Myriad Set Pro",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Helvetica Neue",
+    sans-serif;
+  font-size: 20px;
+  font-weight: 300;
+  color: #fff;
+  letter-spacing: 2px;
+  animation: bootWelcomeFadeIn 0.4s ease-out forwards;
 }

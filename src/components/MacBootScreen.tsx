@@ -1,83 +1,124 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
+
+type BootPhase = "crt-on" | "chime-flash" | "logo-progress" | "welcome" | "fade-out";
 
 interface MacBootScreenProps {
   readonly onComplete: () => void;
 }
 
 export default function MacBootScreen({ onComplete }: MacBootScreenProps) {
-  const [phase, setPhase] = useState<1 | 2 | 3>(1);
-  const [fadingOut, setFadingOut] = useState(false);
-
-  const handleAnimationEnd = useCallback(() => {
-    onComplete();
-  }, [onComplete]);
+  const [phase, setPhase] = useState<BootPhase>("crt-on");
+  const [showFlash, setShowFlash] = useState(false);
+  const [showLogo, setShowLogo] = useState(false);
 
   useEffect(() => {
-    // Phase 1 -> Phase 2 at 1.5s
-    const phase2Timer = setTimeout(() => {
-      setPhase(2);
-    }, 1500);
+    const timers: ReturnType<typeof setTimeout>[] = [];
 
-    // Phase 2 -> Phase 3 at 3.5s
-    const phase3Timer = setTimeout(() => {
-      setPhase(3);
-    }, 3500);
+    // Phase 2: Chime flash at 0.8s
+    timers.push(
+      setTimeout(() => {
+        setPhase("chime-flash");
+        setShowFlash(true);
+      }, 800)
+    );
 
-    // Start fade-out at 4s
-    const fadeOutTimer = setTimeout(() => {
-      setFadingOut(true);
-    }, 4000);
+    // Flash fades, logo appears at 1.1s
+    timers.push(
+      setTimeout(() => {
+        setShowFlash(false);
+        setShowLogo(true);
+      }, 1100)
+    );
 
-    // Complete at 4.5s
-    const completeTimer = setTimeout(() => {
-      handleAnimationEnd();
-    }, 4500);
+    // Phase 3: Logo + progress bar at 1.5s
+    timers.push(
+      setTimeout(() => {
+        setPhase("logo-progress");
+      }, 1500)
+    );
+
+    // Phase 4: Welcome text at 4s
+    timers.push(
+      setTimeout(() => {
+        setPhase("welcome");
+      }, 4000)
+    );
+
+    // Phase 5: Fade out at 4.5s
+    timers.push(
+      setTimeout(() => {
+        setPhase("fade-out");
+      }, 4500)
+    );
+
+    // Complete at 5.5s
+    timers.push(
+      setTimeout(() => {
+        onComplete();
+      }, 5500)
+    );
 
     return () => {
-      clearTimeout(phase2Timer);
-      clearTimeout(phase3Timer);
-      clearTimeout(fadeOutTimer);
-      clearTimeout(completeTimer);
+      for (const timer of timers) {
+        clearTimeout(timer);
+      }
     };
-  }, [handleAnimationEnd]);
+  }, [onComplete]);
+
+  const isCrtOn = phase === "crt-on";
+  const showProgress = phase === "logo-progress" || phase === "welcome" || phase === "fade-out";
+  const isWelcome = phase === "welcome" || phase === "fade-out";
+  const isFadingOut = phase === "fade-out";
+
+  const backgroundColor = isWelcome ? "#4a4a4a" : "#1a1a1a";
 
   return (
     <div
-      className={`boot-overlay ${fadingOut ? "boot-fade-out" : ""}`}
-      style={{
-        backgroundColor: phase === 3 ? "#8b8b8b" : "#1a1a1a",
-      }}
+      className={`boot-overlay ${isCrtOn ? "boot-screen-on" : ""} ${isFadingOut ? "boot-fade-out" : ""}`}
+      style={{ backgroundColor }}
     >
-      {phase < 3 && (
-        <>
-          <svg
-            className="boot-apple-logo"
-            width="60"
-            height="72"
-            viewBox="0 0 60 72"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            {/* Leaf */}
-            <path
-              d="M35 2C35 2 38 0 42 2C40 6 36 8 35 8C34 7 34 4 35 2Z"
-              fill="#c0c0c0"
-            />
-            {/* Apple body with bite */}
-            <path
-              d="M30 12C18 12 8 22 8 36C8 52 16 64 24 68C26 69 28 70 30 70C32 70 34 69 36 68C44 64 52 52 52 36C52 22 42 12 30 12ZM46 30C44 28 42 28 40 30C38 32 38 34 40 36C42 38 44 38 46 36C48 34 48 32 46 30Z"
-              fill="#c0c0c0"
-            />
-          </svg>
+      {/* CRT scanline overlay */}
+      <div className="boot-scanlines" />
 
-          {phase === 2 && (
-            <div className="boot-progress-track">
-              <div className="boot-progress-fill" />
-            </div>
-          )}
-        </>
+      {/* Chime flash */}
+      {showFlash && <div className="boot-chime-flash" />}
+
+      {/* Screen glow behind logo */}
+      {showLogo && <div className="boot-screen-glow" />}
+
+      {/* Apple logo */}
+      {showLogo && (
+        <svg
+          className="boot-apple-logo"
+          width="56"
+          height="68"
+          viewBox="-2 -2 64 72"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M42.2,8.5c-2.8,2.8-6.6,4.4-10.2,4.1c-0.5-3.7,1.3-7.6,3.9-10.2c2.8-2.8,7-4.5,10.6-4.5
+            C47,1.7,44.9,5.8,42.2,8.5z M46.5,12.2c-5.9-0.3-10.9,3.3-13.7,3.3c-2.8,0-7.2-3.2-11.8-3.1
+            c-6.1,0.1-11.7,3.5-14.8,9c-6.3,10.9-1.6,27.2,4.5,36.1c3,4.4,6.6,9.3,11.4,9.1c4.5-0.2,6.3-2.9,11.7-2.9
+            c5.5,0,7.1,2.9,11.9,2.8c4.9-0.1,8-4.4,11-8.9c3.4-5,4.8-9.9,4.9-10.2c-0.1,0-9.4-3.6-9.5-14.3
+            c-0.1-9,7.3-13.3,7.7-13.5C56.4,14.3,49.7,12.4,46.5,12.2z"
+            fill="#c0c0c0"
+          />
+        </svg>
+      )}
+
+      {/* Progress bar */}
+      {showProgress && (
+        <div className="boot-progress-track">
+          <div className="boot-progress-fill" />
+        </div>
+      )}
+
+      {/* Welcome text */}
+      {isWelcome && (
+        <div className="boot-welcome-text">Welcome</div>
       )}
     </div>
   );

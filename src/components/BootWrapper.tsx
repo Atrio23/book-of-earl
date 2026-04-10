@@ -8,19 +8,26 @@ interface BootWrapperProps {
 }
 
 export default function BootWrapper({ children }: BootWrapperProps) {
+  const [mounted, setMounted] = useState(false);
   const [showBoot, setShowBoot] = useState(false);
   const [bootComplete, setBootComplete] = useState(true);
 
   useEffect(() => {
-    try {
-      const hasBooted = sessionStorage.getItem("book-of-earl-booted");
-      if (!hasBooted) {
-        setShowBoot(true);
-        setBootComplete(false);
+    const timer = setTimeout(() => {
+      setMounted(true);
+
+      try {
+        const hasBooted = sessionStorage.getItem("book-of-earl-booted");
+        if (!hasBooted) {
+          setShowBoot(true);
+          setBootComplete(false);
+        }
+      } catch {
+        // sessionStorage not available (SSR or restricted) — skip animation
       }
-    } catch {
-      // sessionStorage not available (SSR or restricted) — skip animation
-    }
+    }, 100);
+
+    return () => clearTimeout(timer);
   }, []);
 
   const handleBootComplete = () => {
@@ -36,14 +43,17 @@ export default function BootWrapper({ children }: BootWrapperProps) {
   return (
     <>
       {showBoot && <MacBootScreen onComplete={handleBootComplete} />}
-      <div
-        style={{
-          opacity: bootComplete ? 1 : 0,
-          transition: "opacity 0.6s ease-in-out",
-        }}
-      >
-        {children}
-      </div>
+      {mounted && (
+        <div
+          style={{
+            opacity: bootComplete ? 1 : 0,
+            transform: bootComplete ? "scale(1)" : "scale(0.98)",
+            transition: "opacity 0.6s ease-in-out, transform 0.6s ease-in-out",
+          }}
+        >
+          {children}
+        </div>
+      )}
     </>
   );
 }
