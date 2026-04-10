@@ -1,26 +1,522 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-mac-toolbar: #d4d4d4;
+  --color-mac-toolbar-dark: #b8b8b8;
+  --color-mac-sidebar: #e0e0e0;
+  --color-mac-sidebar-dark: #cacaca;
+  --color-mac-content: #ffffff;
+  --color-mac-alt-row: #ecf1f8;
+  --color-mac-selection: #3d80df;
+  --color-mac-selection-light: #b3d4fc;
+  --color-mac-border: #999999;
+  --color-mac-border-light: #cccccc;
+  --color-mac-text: #333333;
+  --color-mac-text-light: #666666;
+  --color-mac-text-muted: #999999;
+  --color-mac-red: #ff5f57;
+  --color-mac-yellow: #febc2e;
+  --color-mac-green: #28c840;
+  --color-ink: #333333;
+  --color-ink-light: #666666;
+
+  --font-system: -apple-system, "Lucida Grande", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ============================
+   Custom Cursors
+   ============================ */
+
+html, body {
+  cursor: url('/cursors/default.svg') 2 1, default;
+}
+
+a, button, [role="button"], input[type="submit"], select, label[for],
+.mac-toolbar-btn, .mac-sidebar-item {
+  cursor: url('/cursors/pointer.svg') 8 1, pointer;
+}
+
+/* ============================
+   Base & Reset
+   ============================ */
+
+html {
+  scroll-behavior: smooth;
+  background-color: #8b8b8b;
+  color: var(--color-ink);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #8b8b8b;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 1px,
+      rgba(255, 255, 255, 0.03) 1px,
+      rgba(255, 255, 255, 0.03) 2px
+    );
+  color: var(--color-ink);
+  font-family: var(--font-system);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+/* ============================
+   Page Transitions
+   ============================ */
+
+.page-enter {
+  animation: fadeIn 0.3s ease-out both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================
+   Selection Color
+   ============================ */
+
+::selection {
+  background-color: var(--color-mac-selection-light);
+  color: #000;
+}
+
+::-moz-selection {
+  background-color: var(--color-mac-selection-light);
+  color: #000;
+}
+
+/* ============================
+   Scrollbar Styling (Mac Aqua)
+   ============================ */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-left: 1px solid #ddd;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to right, #b0b0b0, #888);
+  border-radius: 4px;
+  border: 1px solid #777;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to right, #999, #666);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #999 #f0f0f0;
+}
+
+/* ============================
+   Mac Window
+   ============================ */
+
+.mac-window {
+  border-radius: 8px;
+  border: 1px solid #666;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.35),
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  background: var(--color-mac-content);
+}
+
+/* ============================
+   Mac Toolbar
+   ============================ */
+
+.mac-toolbar {
+  background: linear-gradient(to bottom, #e8e8e8 0%, #d0d0d0 45%, #c8c8c8 55%, #c0c0c0 100%);
+  border-bottom: 1px solid #999;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  position: relative;
+}
+
+/* ============================
+   Mac Traffic Lights
+   ============================ */
+
+.mac-traffic-lights {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mac-traffic-lights span {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.15),
+    0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.mac-traffic-light-red {
+  background: radial-gradient(circle at 35% 35%, #ff8a80, var(--color-mac-red) 60%, #e04040);
+  border: 1px solid #df4136;
+}
+
+.mac-traffic-light-yellow {
+  background: radial-gradient(circle at 35% 35%, #ffe066, var(--color-mac-yellow) 60%, #d99e10);
+  border: 1px solid #d5a211;
+}
+
+.mac-traffic-light-green {
+  background: radial-gradient(circle at 35% 35%, #7aed8f, var(--color-mac-green) 60%, #1ba030);
+  border: 1px solid #1ca035;
+}
+
+/* ============================
+   Mac Sidebar
+   ============================ */
+
+.mac-sidebar {
+  background: linear-gradient(to bottom, #e5e5e5, #d5d5d5);
+  border-right: 1px solid #aaa;
+}
+
+.mac-sidebar-item {
+  padding: 4px 12px;
+  font-size: 0.8125rem;
+  color: var(--color-mac-text);
+  border-radius: 3px;
+  cursor: default;
+}
+
+.mac-sidebar-item:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.mac-sidebar-item-active {
+  background: var(--color-mac-selection);
+  color: white;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+/* ============================
+   Mac Message List
+   ============================ */
+
+.mac-message-list-row {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.mac-message-list-row:nth-child(even) {
+  background-color: var(--color-mac-alt-row);
+}
+
+.mac-message-list-row:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+.mac-message-selected {
+  background-color: var(--color-mac-selection) !important;
+  color: white;
+}
+
+/* ============================
+   Mac Toolbar Buttons
+   ============================ */
+
+.mac-toolbar-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 12px;
+  font-size: 0.75rem;
+  font-family: var(--font-system);
+  color: var(--color-mac-text);
+  background: linear-gradient(to bottom, #fafafa, #e0e0e0);
+  border: 1px solid #999;
+  border-radius: 4px;
+  box-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+  cursor: default;
+  transition: background 0.1s;
+}
+
+.mac-toolbar-btn:hover {
+  background: linear-gradient(to bottom, #fff, #e8e8e8);
+}
+
+.mac-toolbar-btn-active {
+  background: linear-gradient(to bottom, #b8d4f0, #8cb8e0);
+  border-color: #6a9fcb;
+  color: #1a3a5c;
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.1),
+    0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* ============================
+   Mac Status Bar (Footer)
+   ============================ */
+
+.mac-status-bar {
+  background: linear-gradient(to bottom, #e0e0e0, #d0d0d0);
+  border-top: 1px solid #999;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* ============================
+   Email Body -- Reading Typography
+   ============================ */
+
+.email-body {
+  font-family: var(--font-system);
+  font-size: 0.9375rem;     /* ~15px */
+  line-height: 1.7;
+  color: var(--color-ink);
+  letter-spacing: 0.005em;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* First paragraph */
+.email-body > p:first-of-type {
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.email-body p {
+  margin-bottom: 1.2em;
+}
+
+.email-body > p:last-child {
+  margin-bottom: 0;
+}
+
+.email-body .email-date {
+  font-size: 0.8125rem;
+  color: var(--color-mac-text-muted);
+  margin-bottom: 0.5em;
+}
+
+.email-body .email-greeting {
+  font-style: italic;
+  margin-bottom: 1.5em;
+}
+
+.email-body .email-signoff {
+  margin-top: 2em;
+  font-style: italic;
+  color: var(--color-mac-text-light);
+}
+
+.email-body a {
+  color: var(--color-mac-selection);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  transition: color 0.15s;
+  word-break: break-word;
+}
+
+.email-body a:hover {
+  color: #2060b0;
+}
+
+.email-body blockquote {
+  border-left: 3px solid var(--color-mac-border-light);
+  padding-left: 1.25em;
+  margin: 1.5em 0;
+  font-style: italic;
+  color: var(--color-mac-text-light);
+  background: rgba(0, 0, 0, 0.015);
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+  border-radius: 0 3px 3px 0;
+}
+
+.email-body h1, .email-body h2, .email-body h3 {
+  font-family: var(--font-system);
+  font-weight: 700;
+  color: var(--color-mac-text);
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+.email-body ul, .email-body ol {
+  margin-bottom: 1.2em;
+  padding-left: 1.5em;
+}
+
+.email-body li {
+  margin-bottom: 0.3em;
+}
+
+.email-body img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin: 1em 0;
+  border: 1px solid var(--color-mac-border-light);
+}
+
+.email-body hr {
+  border: none;
+  border-top: 1px solid var(--color-mac-border-light);
+  margin: 2em 0;
+}
+
+/* ============================
+   Letter Panel -- Card
+   ============================ */
+
+.letter-panel {
+  position: relative;
+}
+
+/* Subtle top accent */
+.letter-panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--color-mac-border-light) 30%,
+    var(--color-mac-border-light) 70%,
+    transparent
+  );
+  opacity: 0.4;
+}
+
+/* ============================
+   Navigation Active Link
+   ============================ */
+
+.nav-link-active {
+  /* Active state handled by mac-toolbar-btn-active */
+}
+
+/* ============================
+   Hero Gradient (Mac-style)
+   ============================ */
+
+.hero-gradient {
+  background: linear-gradient(
+    180deg,
+    #4a4a4a 0%,
+    #333333 100%
+  );
+}
+
+/* ============================
+   Decorative Separator (legacy)
+   ============================ */
+
+.ornament::before {
+  content: "";
+  display: block;
+  text-align: center;
+  margin: 0.75rem auto;
+  width: 60px;
+  height: 1px;
+  background: var(--color-mac-border-light);
+}
+
+/* ============================
+   Animation 1: Staggered Fade-In
+   for list items (emails, sidebar, photos)
+   ============================ */
+
+@keyframes staggerFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stagger-fade-in > * {
+  opacity: 0;
+  animation: staggerFadeIn 0.35s ease-out forwards;
+}
+
+.stagger-fade-in > *:nth-child(1) { animation-delay: 0.03s; }
+.stagger-fade-in > *:nth-child(2) { animation-delay: 0.06s; }
+.stagger-fade-in > *:nth-child(3) { animation-delay: 0.09s; }
+.stagger-fade-in > *:nth-child(4) { animation-delay: 0.12s; }
+.stagger-fade-in > *:nth-child(5) { animation-delay: 0.15s; }
+.stagger-fade-in > *:nth-child(6) { animation-delay: 0.18s; }
+.stagger-fade-in > *:nth-child(7) { animation-delay: 0.21s; }
+.stagger-fade-in > *:nth-child(8) { animation-delay: 0.24s; }
+.stagger-fade-in > *:nth-child(9) { animation-delay: 0.27s; }
+.stagger-fade-in > *:nth-child(10) { animation-delay: 0.30s; }
+.stagger-fade-in > *:nth-child(n+11) { animation-delay: 0.33s; }
+
+/* ============================
+   Animation 2: Hover Lift
+   subtle scale + shadow on hover
+   ============================ */
+
+.hover-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.hover-lift:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================
+   Animation 3: Quote Slide-In
+   blockquotes slide in from left
+   ============================ */
+
+@keyframes quoteSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.quote-slide-in {
+  opacity: 0;
+  animation: quoteSlideIn 0.5s ease-out forwards;
+}
+
+.quote-slide-in:nth-child(1) { animation-delay: 0.1s; }
+.quote-slide-in:nth-child(2) { animation-delay: 0.2s; }
+.quote-slide-in:nth-child(3) { animation-delay: 0.3s; }
+.quote-slide-in:nth-child(4) { animation-delay: 0.4s; }
+.quote-slide-in:nth-child(5) { animation-delay: 0.5s; }
+.quote-slide-in:nth-child(6) { animation-delay: 0.6s; }
