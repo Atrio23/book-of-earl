@@ -59,7 +59,7 @@ export default async function HomePage() {
         />
 
         {/* Main content - "no message selected" view */}
-        <div className="flex-1 min-w-0 flex flex-col bg-white">
+        <div className="flex-1 min-w-0 flex flex-col bg-white overflow-x-hidden">
           {/* Toolbar-like bar */}
           <div className="px-3 py-1.5 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] border-b border-[#b8b8b8]" />
 
@@ -110,7 +110,7 @@ export default async function HomePage() {
                   Family Photos
                 </span>
               </div>
-              <div className="px-3 py-3 bg-[#f0f0f0]">
+              <div className="px-2 sm:px-3 py-3 bg-[#f0f0f0] overflow-hidden">
                 <PhotoCarousel photos={carouselPhotos} />
               </div>
             </div>

@@ -123,7 +123,7 @@ export default function PhotoCarousel({ photos }: PhotoCarouselProps) {
   const photoUrl = currentPhoto?.public_url ?? "";
 
   return (
-    <div className="select-none">
+    <div className="select-none overflow-hidden">
       {/* Main photo area */}
       <div
         className="relative bg-white border border-[#b8b8b8] rounded-[3px] overflow-hidden"
@@ -136,7 +136,7 @@ export default function PhotoCarousel({ photos }: PhotoCarouselProps) {
         <div className="bg-[#f5f5f5] p-2 sm:p-3">
           <div
             className="relative bg-[#1a1a1a] rounded-[2px] overflow-hidden flex items-center justify-center"
-            style={{ height: "clamp(180px, 40vh, 280px)" }}
+            style={{ height: "clamp(150px, 25vh, 280px)" }}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
           >
