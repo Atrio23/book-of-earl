@@ -50,11 +50,12 @@ export default async function HomePage() {
   return (
     <div className="page-enter flex flex-col" style={{ minHeight: "calc(100vh - 65px)" }}>
       <div className="flex flex-1 min-h-0">
-        {/* Sidebar */}
+        {/* Sidebar - hidden on mobile, visible on sm+ */}
         <MailSidebar
           totalCount={totalCount}
           yearCounts={yearCounts}
           categories={categories}
+          className="hidden sm:flex"
         />
 
         {/* Main content - "no message selected" view */}
@@ -63,28 +64,28 @@ export default async function HomePage() {
           <div className="px-3 py-1.5 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] border-b border-[#b8b8b8]" />
 
           {/* Welcome content */}
-          <div className="flex-1 flex flex-col items-center justify-center px-6">
+          <div className="flex-1 flex flex-col items-center justify-center px-4 sm:px-6 py-6 sm:py-0">
             <div className="text-center max-w-md">
               {/* Envelope icon */}
-              <div className="text-[64px] mb-4 leading-none opacity-40">
+              <div className="text-[48px] sm:text-[64px] mb-3 sm:mb-4 leading-none opacity-40">
                 &#9993;
               </div>
 
-              <h1 className="text-[24px] font-bold text-[#333] font-[family-name:var(--font-system)] tracking-tight mb-2">
+              <h1 className="text-[20px] sm:text-[24px] font-bold text-[#333] font-[family-name:var(--font-system)] tracking-tight mb-2">
                 The Book of Earl
               </h1>
 
-              <p className="text-[14px] text-[#666] font-[family-name:var(--font-system)] mb-1">
+              <p className="text-[13px] sm:text-[14px] text-[#666] font-[family-name:var(--font-system)] mb-1">
                 {totalCount > 0 ? `${totalCount} letters` : "Letters"} from Apartment 10B
                 {yearSpan ? `, ${yearSpan}` : ""}
               </p>
 
-              <p className="text-[13px] text-[#999] font-[family-name:var(--font-system)] mb-8">
+              <p className="text-[12px] sm:text-[13px] text-[#999] font-[family-name:var(--font-system)] mb-6 sm:mb-8">
                 Select a letter from the archive or browse by year
               </p>
 
               {/* Mac aqua-style buttons */}
-              <div className="flex items-center justify-center gap-3">
+              <div className="flex items-center justify-center gap-2 sm:gap-3">
                 <Link
                   href="/archive"
                   className="inline-flex items-center px-5 py-1.5 bg-gradient-to-b from-[#6cb3fa] to-[#3d80df] text-white text-[13px] font-medium font-[family-name:var(--font-system)] rounded-[5px] border border-[#2d6bc4] shadow-[inset_0_1px_0_rgba(255,255,255,0.3),0_1px_2px_rgba(0,0,0,0.15)] hover:from-[#7dc0ff] hover:to-[#4a8ae5] active:from-[#3572c4] active:to-[#2d5fa8] transition-all"
