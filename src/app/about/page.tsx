@@ -42,7 +42,7 @@ export default function AboutPage() {
   return (
     <div className="page-enter" style={{ fontFamily: '-apple-system, "Lucida Grande", "Helvetica Neue", sans-serif' }}>
       {/* Mac toolbar */}
-      <div className="border-b border-[#c8c8c8] bg-gradient-to-b from-[#f6f6f6] to-[#e8e8e8] px-6 py-2.5">
+      <div className="border-b border-[#c8c8c8] bg-gradient-to-b from-[#f6f6f6] to-[#e8e8e8] px-4 sm:px-6 py-2.5">
         <div className="mx-auto max-w-[680px]">
           <h1 className="text-[13px] font-bold text-[#333]">About Earl &amp; His Letters</h1>
           <p className="text-[11px] text-[#888] mt-0.5">
@@ -53,11 +53,11 @@ export default function AboutPage() {
 
       {/* Content area */}
       <div className="bg-white">
-        <div className="mx-auto max-w-[680px] px-6 py-10" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>
+        <div className="mx-auto max-w-[680px] px-4 sm:px-6 py-6 sm:py-10" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>
 
           {/* About Earl */}
-          <section className="text-[#444] text-[15px] leading-[1.7]">
-            <h2 className="text-[18px] font-bold text-[#222] mb-4" style={{ fontFamily: '-apple-system, "Lucida Grande", "Helvetica Neue", sans-serif' }}>
+          <section className="text-[#444] text-[14px] sm:text-[15px] leading-[1.7]">
+            <h2 className="text-[16px] sm:text-[18px] font-bold text-[#222] mb-4" style={{ fontFamily: '-apple-system, "Lucida Grande", "Helvetica Neue", sans-serif' }}>
               The Letter Writer
             </h2>
             <p>
@@ -92,8 +92,8 @@ export default function AboutPage() {
 
           {/* Featured Quote */}
           <section className="my-8">
-            <blockquote className="border-l-[3px] border-[#999] pl-6 py-1">
-              <p className="text-[#555] text-[15px] leading-[1.7] italic">
+            <blockquote className="border-l-[3px] border-[#999] pl-4 sm:pl-6 py-1">
+              <p className="text-[#555] text-[14px] sm:text-[15px] leading-[1.7] italic">
                 When I was a boy, I used to visit my cousin Sonny in Montreal.
                 He would take me to Rockhead&#39;s Paradise, the great jazz club
                 on the corner of Saint-Antoine. I was too young to be there,
@@ -112,8 +112,8 @@ export default function AboutPage() {
           <hr className="my-8 border-[#d0d0d0]" />
 
           {/* Two Circles */}
-          <section className="text-[#444] text-[15px] leading-[1.7]">
-            <h2 className="text-[18px] font-bold text-[#222] mb-4" style={{ fontFamily: '-apple-system, "Lucida Grande", "Helvetica Neue", sans-serif' }}>
+          <section className="text-[#444] text-[14px] sm:text-[15px] leading-[1.7]">
+            <h2 className="text-[16px] sm:text-[18px] font-bold text-[#222] mb-4" style={{ fontFamily: '-apple-system, "Lucida Grande", "Helvetica Neue", sans-serif' }}>
               Two Circles, One Voice
             </h2>
             <p>
@@ -151,10 +151,10 @@ export default function AboutPage() {
 
           {/* Timeline */}
           <section>
-            <h2 className="text-[18px] font-bold text-[#222] mb-6" style={{ fontFamily: '-apple-system, "Lucida Grande", "Helvetica Neue", sans-serif' }}>
+            <h2 className="text-[16px] sm:text-[18px] font-bold text-[#222] mb-6" style={{ fontFamily: '-apple-system, "Lucida Grande", "Helvetica Neue", sans-serif' }}>
               A Decade of Letters
             </h2>
-            <ul className="space-y-4 text-[15px] leading-[1.7]">
+            <ul className="space-y-4 text-[14px] sm:text-[15px] leading-[1.7]">
               {TIMELINE_ENTRIES.map((entry) => (
                 <li key={entry.year} className="flex gap-3">
                   <span className="text-[#999] mt-[3px] shrink-0" aria-hidden="true">&bull;</span>
@@ -175,8 +175,8 @@ export default function AboutPage() {
           <hr className="my-8 border-[#d0d0d0]" />
 
           {/* Preserving the Letters */}
-          <section className="text-[#444] text-[15px] leading-[1.7]">
-            <h2 className="text-[18px] font-bold text-[#222] mb-4" style={{ fontFamily: '-apple-system, "Lucida Grande", "Helvetica Neue", sans-serif' }}>
+          <section className="text-[#444] text-[14px] sm:text-[15px] leading-[1.7]">
+            <h2 className="text-[16px] sm:text-[18px] font-bold text-[#222] mb-4" style={{ fontFamily: '-apple-system, "Lucida Grande", "Helvetica Neue", sans-serif' }}>
               Preserving the Letters
             </h2>
             <p>
@@ -202,8 +202,8 @@ export default function AboutPage() {
           <hr className="my-8 border-[#d0d0d0]" />
 
           {/* Earl & Phyllis */}
-          <section className="text-[#444] text-[15px] leading-[1.7]">
-            <h2 className="text-[18px] font-bold text-[#222] mb-4" style={{ fontFamily: '-apple-system, "Lucida Grande", "Helvetica Neue", sans-serif' }}>
+          <section className="text-[#444] text-[14px] sm:text-[15px] leading-[1.7]">
+            <h2 className="text-[16px] sm:text-[18px] font-bold text-[#222] mb-4" style={{ fontFamily: '-apple-system, "Lucida Grande", "Helvetica Neue", sans-serif' }}>
               Earl &amp; Phyllis
             </h2>
             <p>
@@ -222,10 +222,10 @@ export default function AboutPage() {
 
           {/* A Note to the Family */}
           <section className="text-center py-6">
-            <h2 className="text-[18px] font-bold text-[#222] mb-3" style={{ fontFamily: '-apple-system, "Lucida Grande", "Helvetica Neue", sans-serif' }}>
+            <h2 className="text-[16px] sm:text-[18px] font-bold text-[#222] mb-3" style={{ fontFamily: '-apple-system, "Lucida Grande", "Helvetica Neue", sans-serif' }}>
               A Note to the Family
             </h2>
-            <p className="text-[#555] text-[15px] italic leading-[1.7] max-w-lg mx-auto">
+            <p className="text-[#555] text-[14px] sm:text-[15px] italic leading-[1.7] max-w-lg mx-auto">
               This archive is a labor of love. We hope that browsing these pages
               brings the same warmth and joy that opening one of Earl&#39;s
               emails always did -- the feeling of hearing a voice you love,
@@ -234,7 +234,7 @@ export default function AboutPage() {
             <div className="mt-6">
               <Link
                 href="/archive"
-                className="inline-flex items-center gap-1 text-[13px] text-[#555] hover:text-[#111] rounded px-4 py-1.5 border border-[#b0b0b0] bg-gradient-to-b from-white to-[#e0e0e0] shadow-sm active:from-[#d0d0d0] active:to-[#c0c0c0]"
+                className="inline-flex items-center gap-1 text-[13px] text-[#555] hover:text-[#111] rounded px-4 py-1.5 min-h-[44px] sm:min-h-0 border border-[#b0b0b0] bg-gradient-to-b from-white to-[#e0e0e0] shadow-sm active:from-[#d0d0d0] active:to-[#c0c0c0]"
                 style={{ fontFamily: '-apple-system, "Lucida Grande", "Helvetica Neue", sans-serif' }}
               >
                 Read the Letters
@@ -247,7 +247,7 @@ export default function AboutPage() {
 
       {/* Bottom memorial text */}
       <div className="border-t border-[#d0d0d0] bg-[#f5f5f5] py-6">
-        <div className="mx-auto max-w-[520px] px-6 text-center">
+        <div className="mx-auto max-w-[520px] px-4 sm:px-6 text-center">
           <p className="text-[12px] text-[#999] italic" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>
             In memory of Earl Roberts -- letter writer, storyteller, and the
             man who believed that sharing our stories is one of the most

@@ -281,7 +281,7 @@ export default function ReviewsPage() {
       }}
     >
       {/* Mac toolbar header */}
-      <div className="border-b border-[#c8c8c8] bg-gradient-to-b from-[#f6f6f6] to-[#e8e8e8] px-6 py-2.5">
+      <div className="border-b border-[#c8c8c8] bg-gradient-to-b from-[#f6f6f6] to-[#e8e8e8] px-4 sm:px-6 py-2.5">
         <div className="mx-auto max-w-[680px]">
           <h1 className="text-[13px] font-bold text-[#333]">
             Earl&#39;s Reviews
@@ -294,7 +294,7 @@ export default function ReviewsPage() {
 
       {/* Review Sections */}
       <div className="bg-white">
-        <div className="mx-auto max-w-[680px] px-6 py-10 space-y-14">
+        <div className="mx-auto max-w-[680px] px-4 sm:px-6 py-6 sm:py-10 space-y-10 sm:space-y-14">
           {REVIEW_SECTIONS.map((section, sectionIndex) => (
             <section key={section.category}>
               {/* Section heading */}
@@ -320,10 +320,10 @@ export default function ReviewsPage() {
                 {section.reviews.map((review) => (
                   <div
                     key={review.emailId}
-                    className="border border-[#d8d8d8] rounded bg-[#fcfcfc] p-4 hover:bg-[#f8f9fb] transition-colors duration-150"
+                    className="border border-[#d8d8d8] rounded bg-[#fcfcfc] p-3 sm:p-4 hover:bg-[#f8f9fb] transition-colors duration-150"
                   >
                     {/* Title + verdict row */}
-                    <div className="flex items-start justify-between gap-3 mb-2">
+                    <div className="flex flex-wrap sm:flex-nowrap items-start justify-between gap-2 sm:gap-3 mb-2">
                       <h3 className="text-[14px] font-bold text-[#222] leading-snug">
                         {review.title}
                       </h3>
@@ -336,7 +336,7 @@ export default function ReviewsPage() {
 
                     {/* Quote */}
                     <p
-                      className="text-[14px] text-[#555] leading-[1.65] italic"
+                      className="text-[13px] sm:text-[14px] text-[#555] leading-[1.65] italic"
                       style={{
                         fontFamily:
                           'Georgia, "Times New Roman", serif',
@@ -346,10 +346,10 @@ export default function ReviewsPage() {
                     </p>
 
                     {/* Footer */}
-                    <div className="mt-3 flex items-center text-[12px]">
+                    <div className="mt-3 flex flex-wrap items-center gap-y-0.5 text-[12px]">
                       <Link
                         href={`/email/${review.emailId}`}
-                        className="text-[#3d80df] hover:underline truncate max-w-[70%]"
+                        className="text-[#3d80df] hover:underline truncate max-w-full sm:max-w-[70%]"
                       >
                         {review.emailSubject}
                       </Link>
@@ -377,8 +377,8 @@ export default function ReviewsPage() {
       </div>
 
       {/* Bottom CTA */}
-      <div className="border-t border-[#d0d0d0] bg-[#f5f5f5] py-8">
-        <div className="mx-auto max-w-[520px] px-6 text-center">
+      <div className="border-t border-[#d0d0d0] bg-[#f5f5f5] py-6 sm:py-8">
+        <div className="mx-auto max-w-[520px] px-4 sm:px-6 text-center">
           <p
             className="text-[14px] text-[#666] italic leading-[1.7]"
             style={{
@@ -401,7 +401,7 @@ export default function ReviewsPage() {
 
       {/* Bottom memorial bar */}
       <div className="border-t border-[#d0d0d0] bg-[#f5f5f5] py-6">
-        <div className="mx-auto max-w-[520px] px-6 text-center">
+        <div className="mx-auto max-w-[520px] px-4 sm:px-6 text-center">
           <p
             className="text-[12px] text-[#999] italic"
             style={{

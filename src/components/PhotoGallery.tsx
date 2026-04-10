@@ -64,13 +64,13 @@ export default function PhotoGallery({
           <div key={group.year}>
             {/* Year divider -- matches archive style */}
             <div className="sticky top-0 z-10 bg-gradient-to-b from-[#e8e8e8] to-[#dedede] border-t border-t-[#f0f0f0] border-b border-b-[#c8c8c8] px-4 py-1">
-              <span className="text-[12px] font-bold text-[#555] font-[family-name:var(--font-system)] tracking-wide tabular-nums">
+              <span className="text-[13px] sm:text-[12px] font-bold text-[#555] font-[family-name:var(--font-system)] tracking-wide tabular-nums">
                 {group.year}
               </span>
             </div>
 
             {/* Photo grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 p-4 stagger-fade-in">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 p-4 stagger-fade-in">
               {group.photos.map((photo) => {
                 const src = photo.public_url ?? "";
                 return (
@@ -92,7 +92,7 @@ export default function PhotoGallery({
                     </div>
                     {photo.date_taken && (
                       <div className="px-2 py-1.5 bg-white border-t border-[#e8e8e8]">
-                        <p className="text-[11px] text-[#999] font-[family-name:var(--font-system)] truncate">
+                        <p className="text-[13px] sm:text-[11px] text-[#999] font-[family-name:var(--font-system)] truncate">
                           {formatPhotoDate(photo.date_taken)}
                         </p>
                       </div>

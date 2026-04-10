@@ -1,7 +1,12 @@
 export default function Footer() {
   return (
-    <footer className="mac-status-bar">
-      <div className="flex items-center justify-between px-3 sm:px-4 py-1.5 text-[11px] text-mac-text-light">
+    <footer
+      className="mac-status-bar"
+      style={{
+        paddingBottom: `env(safe-area-inset-bottom)`,
+      }}
+    >
+      <div className="flex items-center justify-between px-3 sm:px-4 py-1.5 text-[12px] sm:text-[11px] text-mac-text-light">
         <span className="shrink-0">394 letters</span>
         <span
           className="text-mac-text-muted italic max-w-md text-center truncate hidden sm:inline"

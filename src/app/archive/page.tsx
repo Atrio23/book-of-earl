@@ -7,6 +7,7 @@ import SearchBar from "@/components/SearchBar";
 import Pagination from "@/components/Pagination";
 import YearDivider from "@/components/YearDivider";
 import MailSidebar from "@/components/MailSidebar";
+import MobileSidebarDrawer from "@/components/MobileSidebarDrawer";
 import type { EmailListItem } from "@/lib/types";
 
 export const metadata: Metadata = {
@@ -99,14 +100,27 @@ async function ArchiveContent({
 
   return (
     <div className="flex flex-1 min-h-0">
-      {/* Sidebar */}
+      {/* Sidebar - desktop only */}
       <MailSidebar
         totalCount={totalCount}
         yearCounts={yearCounts}
         categories={categories}
         activeYear={year}
         activeCategory={category}
+        className="hidden sm:flex"
       />
+
+      {/* Sidebar - mobile drawer */}
+      <MobileSidebarDrawer>
+        <MailSidebar
+          totalCount={totalCount}
+          yearCounts={yearCounts}
+          categories={categories}
+          activeYear={year}
+          activeCategory={category}
+          className="w-full border-r-0"
+        />
+      </MobileSidebarDrawer>
 
       {/* Message list area */}
       <div className="flex-1 flex flex-col min-h-0 bg-white">
@@ -148,7 +162,7 @@ async function ArchiveContent({
                 <p className="text-[14px] font-bold text-[#555] font-[family-name:var(--font-system)] mb-1">
                   No letters found
                 </p>
-                <p className="text-[12px] text-[#888] font-[family-name:var(--font-system)]">
+                <p className="text-[15px] sm:text-[14px] text-[#888] font-[family-name:var(--font-system)]">
                   {hasFilters
                     ? "Try adjusting your search or clearing the filters."
                     : "Check back soon for new letters from Earl."}

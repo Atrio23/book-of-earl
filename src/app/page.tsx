@@ -64,7 +64,7 @@ export default async function HomePage() {
           <div className="px-3 py-1.5 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] border-b border-[#b8b8b8]" />
 
           {/* Welcome content */}
-          <div className="flex-1 flex flex-col items-center justify-center px-4 sm:px-6 py-6 sm:py-0">
+          <div className="flex-1 flex flex-col items-center justify-center px-5 sm:px-6 py-8 sm:py-0">
             <div className="text-center max-w-md">
               {/* Envelope icon */}
               <div className="text-[48px] sm:text-[64px] mb-3 sm:mb-4 leading-none opacity-40">
@@ -85,16 +85,16 @@ export default async function HomePage() {
               </p>
 
               {/* Mac aqua-style buttons */}
-              <div className="flex items-center justify-center gap-2 sm:gap-3">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3">
                 <Link
                   href="/archive"
-                  className="inline-flex items-center px-5 py-1.5 bg-gradient-to-b from-[#6cb3fa] to-[#3d80df] text-white text-[13px] font-medium font-[family-name:var(--font-system)] rounded-[5px] border border-[#2d6bc4] shadow-[inset_0_1px_0_rgba(255,255,255,0.3),0_1px_2px_rgba(0,0,0,0.15)] hover:from-[#7dc0ff] hover:to-[#4a8ae5] active:from-[#3572c4] active:to-[#2d5fa8] transition-all"
+                  className="inline-flex items-center justify-center w-full sm:w-auto text-center px-5 py-1.5 bg-gradient-to-b from-[#6cb3fa] to-[#3d80df] text-white text-[13px] font-medium font-[family-name:var(--font-system)] rounded-[5px] border border-[#2d6bc4] shadow-[inset_0_1px_0_rgba(255,255,255,0.3),0_1px_2px_rgba(0,0,0,0.15)] hover:from-[#7dc0ff] hover:to-[#4a8ae5] active:from-[#3572c4] active:to-[#2d5fa8] transition-all"
                 >
                   Browse Archive
                 </Link>
                 <Link
                   href="/about"
-                  className="inline-flex items-center px-5 py-1.5 bg-gradient-to-b from-[#fafafa] to-[#e0e0e0] text-[#333] text-[13px] font-medium font-[family-name:var(--font-system)] rounded-[5px] border border-[#aaa] shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_1px_2px_rgba(0,0,0,0.08)] hover:from-[#fff] hover:to-[#eaeaea] active:from-[#d8d8d8] active:to-[#ccc] transition-all"
+                  className="inline-flex items-center justify-center w-full sm:w-auto text-center px-5 py-1.5 bg-gradient-to-b from-[#fafafa] to-[#e0e0e0] text-[#333] text-[13px] font-medium font-[family-name:var(--font-system)] rounded-[5px] border border-[#aaa] shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_1px_2px_rgba(0,0,0,0.08)] hover:from-[#fff] hover:to-[#eaeaea] active:from-[#d8d8d8] active:to-[#ccc] transition-all"
                 >
                   About Earl
                 </Link>
@@ -129,15 +129,15 @@ export default async function HomePage() {
                   <Link
                     key={email.id}
                     href={`/email/${email.id}`}
-                    className={`block px-4 py-2 border-b border-[#ddd] transition-colors duration-100 ${
+                    className={`block px-4 py-3 sm:py-2 border-b border-[#ddd] transition-colors duration-100 ${
                       idx % 2 === 1 ? "bg-[#ecf1f8]" : "bg-white"
                     } hover:bg-[#d4e3f5]`}
                   >
                     <div className="flex items-start gap-2.5">
-                      <span className="shrink-0 mt-[7px] w-[8px] h-[8px] rounded-full bg-[#3d80df]" />
+                      <span className="shrink-0 mt-[5px] sm:mt-[7px] w-[8px] h-[8px] rounded-full bg-[#3d80df]" />
                       <div className="flex-1 min-w-0">
                         <div className="flex items-baseline justify-between gap-3">
-                          <h3 className="text-[13px] font-bold text-[#1a1a1a] truncate font-[family-name:var(--font-system)] leading-snug">
+                          <h3 className="text-[14px] sm:text-[13px] font-bold text-[#1a1a1a] truncate font-[family-name:var(--font-system)] leading-snug">
                             {email.subject}
                           </h3>
                           <time className="shrink-0 text-[11px] text-[#888] font-[family-name:var(--font-system)] tabular-nums whitespace-nowrap">
@@ -145,7 +145,7 @@ export default async function HomePage() {
                           </time>
                         </div>
                         {email.snippet && (
-                          <p className="text-[12px] text-[#888] font-[family-name:var(--font-system)] leading-snug mt-0.5 truncate">
+                          <p className="text-[13px] sm:text-[12px] text-[#888] font-[family-name:var(--font-system)] leading-snug mt-0.5 truncate">
                             {truncateText(email.snippet, 120)}
                           </p>
                         )}

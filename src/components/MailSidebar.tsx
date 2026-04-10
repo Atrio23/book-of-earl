@@ -6,6 +6,7 @@ interface MailSidebarProps {
   readonly categories: readonly { category: string; count: number }[];
   readonly activeYear?: number;
   readonly activeCategory?: string;
+  readonly className?: string;
 }
 
 export default function MailSidebar({
@@ -14,11 +15,12 @@ export default function MailSidebar({
   categories,
   activeYear,
   activeCategory,
+  className,
 }: MailSidebarProps) {
   const isAllActive = !activeYear && !activeCategory;
 
   return (
-    <aside className="w-[210px] shrink-0 bg-[#e8e6e3] border-r border-[#b8b8b8] flex flex-col select-none overflow-y-auto overflow-x-hidden">
+    <aside className={`w-[210px] shrink-0 bg-[#e8e6e3] border-r border-[#b8b8b8] flex flex-col select-none overflow-y-auto overflow-x-hidden ${className ?? ""}`}>
       {/* Mailboxes header */}
       <div className="px-4 pt-4 pb-2">
         <h2 className="text-[11px] font-bold uppercase tracking-wider text-[#6d6d6d] font-[family-name:var(--font-system)]">

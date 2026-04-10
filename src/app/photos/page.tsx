@@ -61,11 +61,11 @@ async function PhotosContent() {
   return (
     <div className="flex flex-col flex-1 min-h-0 bg-white">
       {/* Toolbar header */}
-      <div className="border-b border-[#c8c8c8] bg-gradient-to-b from-[#f6f6f6] to-[#e8e8e8] px-6 py-2.5">
-        <h1 className="text-[13px] font-bold text-[#333] font-[family-name:var(--font-system)]">
+      <div className="border-b border-[#c8c8c8] bg-gradient-to-b from-[#f6f6f6] to-[#e8e8e8] px-4 sm:px-6 py-2.5">
+        <h1 className="text-[14px] sm:text-[13px] font-bold text-[#333] font-[family-name:var(--font-system)]">
           Photos
         </h1>
-        <p className="text-[11px] text-[#888] mt-0.5 font-[family-name:var(--font-system)]">
+        <p className="text-[12px] sm:text-[11px] text-[#888] mt-0.5 font-[family-name:var(--font-system)]">
           Family photographs and memories
         </p>
       </div>
@@ -79,7 +79,7 @@ async function PhotosContent() {
       )}
 
       {!fetchError && photos.length === 0 && (
-        <div className="flex-1 flex flex-col items-center justify-center py-16">
+        <div className="flex-1 flex flex-col items-center justify-center py-12 sm:py-16 px-4 sm:px-6">
           <div className="text-[48px] mb-3 opacity-30">&#128247;</div>
           <p className="text-[14px] font-bold text-[#555] font-[family-name:var(--font-system)] mb-1">
             No photos yet
@@ -97,7 +97,7 @@ async function PhotosContent() {
       {/* Status bar */}
       <div className="mac-status-bar">
         <div className="flex items-center justify-center px-4 py-1.5">
-          <span className="text-[11px] text-mac-text-light font-[family-name:var(--font-system)]">
+          <span className="text-[12px] sm:text-[11px] text-mac-text-light font-[family-name:var(--font-system)]">
             {photoCount} photo{photoCount !== 1 ? "s" : ""}
           </span>
         </div>

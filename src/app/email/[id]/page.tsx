@@ -58,7 +58,7 @@ export default async function EmailPage(props: EmailPageProps) {
       <div className="border-b border-[#c8c8c8] bg-gradient-to-b from-[#f6f6f6] to-[#e8e8e8] px-4 py-1.5">
         <Link
           href="/archive"
-          className="inline-flex items-center gap-1 text-xs text-[#555] hover:text-[#111] rounded px-2 py-0.5 border border-[#c0c0c0] bg-gradient-to-b from-white to-[#e8e8e8] shadow-sm active:from-[#ddd] active:to-[#ccc]"
+          className="inline-flex items-center gap-1.5 min-h-[44px] sm:min-h-0 text-[13px] sm:text-xs text-[#555] hover:text-[#111] rounded px-2 py-0.5 border border-[#c0c0c0] bg-gradient-to-b from-white to-[#e8e8e8] shadow-sm active:from-[#ddd] active:to-[#ccc]"
         >
           <svg
             width="10"
@@ -77,10 +77,10 @@ export default async function EmailPage(props: EmailPageProps) {
       </div>
 
       {/* Mac Mail header bar */}
-      <header className="border-b border-[#c8c8c8] bg-gradient-to-b from-[#f0f0f0] to-[#dcdcdc] px-6 py-4">
-        <div className="mx-auto max-w-[780px] flex items-start justify-between gap-4">
+      <header className="border-b border-[#c8c8c8] bg-gradient-to-b from-[#f0f0f0] to-[#dcdcdc] px-4 sm:px-6 py-3 sm:py-4">
+        <div className="mx-auto max-w-[780px] flex items-start justify-between gap-3 sm:gap-4">
           {/* Email header fields */}
-          <div className="min-w-0 flex-1 text-[13px] leading-[1.6]">
+          <div className="min-w-0 flex-1 text-[12px] sm:text-[13px] leading-[1.6]">
             <div>
               <span className="text-[#888] font-medium">From:</span>{" "}
               <span className="text-[#333] font-medium">
@@ -183,8 +183,8 @@ export default async function EmailPage(props: EmailPageProps) {
       </header>
 
       {/* Email body area */}
-      <article className="bg-white min-h-[60vh]">
-        <div className="mx-auto max-w-[680px] px-6 py-10" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>
+      <article className="bg-white min-h-[60vh] overflow-x-hidden">
+        <div className="mx-auto max-w-[680px] px-4 sm:px-6 py-6 sm:py-10 overflow-x-auto" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>
           <EmailBody
             bodyHtml={email.body_html || ""}
             bodyText={email.body_text || ""}
@@ -193,9 +193,9 @@ export default async function EmailPage(props: EmailPageProps) {
       </article>
 
       {/* Bottom nav bar with prev/next details */}
-      <nav className="border-t border-[#d0d0d0] bg-[#f5f5f5]">
-        <div className="mx-auto max-w-[780px] px-6 py-3">
-          <div className="grid grid-cols-2 gap-4 text-[13px]">
+      <nav className="border-t border-[#d0d0d0] bg-[#f5f5f5]" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
+        <div className="mx-auto max-w-[780px] px-4 sm:px-6 py-3">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 text-[12px] sm:text-[13px]">
             {adjacent.previous ? (
               <Link
                 href={`/email/${adjacent.previous.id}`}
@@ -216,7 +216,7 @@ export default async function EmailPage(props: EmailPageProps) {
                 </svg>
                 <div className="min-w-0">
                   <div className="text-[11px] text-[#999] uppercase tracking-wider">Older</div>
-                  <div className="truncate text-[#444] group-hover:text-[#3d80df]">
+                  <div className="line-clamp-2 text-[#444] group-hover:text-[#3d80df]">
                     {adjacent.previous.subject}
                   </div>
                   <div className="text-[11px] text-[#aaa]">
@@ -248,7 +248,7 @@ export default async function EmailPage(props: EmailPageProps) {
                 </svg>
                 <div className="min-w-0">
                   <div className="text-[11px] text-[#999] uppercase tracking-wider">Newer</div>
-                  <div className="truncate text-[#444] group-hover:text-[#3d80df]">
+                  <div className="line-clamp-2 text-[#444] group-hover:text-[#3d80df]">
                     {adjacent.next.subject}
                   </div>
                   <div className="text-[11px] text-[#aaa]">

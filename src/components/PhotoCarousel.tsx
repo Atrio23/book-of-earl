@@ -7,6 +7,8 @@ interface PhotoCarouselProps {
   readonly photos: readonly Photo[];
 }
 
+const SWIPE_THRESHOLD = 50;
+
 function formatPhotoDate(dateString: string | null): string {
   if (!dateString) {
     return "";
@@ -24,6 +26,7 @@ export default function PhotoCarousel({ photos }: PhotoCarouselProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const thumbnailStripRef = useRef<HTMLDivElement>(null);
   const autoPlayRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
 
   const photoCount = photos.length;
   const currentPhoto = photos[currentIndex] ?? null;
@@ -39,6 +42,36 @@ export default function PhotoCarousel({ photos }: PhotoCarouselProps) {
 
   const goNext = useCallback(() => goTo(currentIndex + 1), [goTo, currentIndex]);
   const goPrev = useCallback(() => goTo(currentIndex - 1), [goTo, currentIndex]);
+
+  // Touch swipe handlers
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    if (touch) {
+      touchStartRef.current = { x: touch.clientX, y: touch.clientY };
+    }
+  }, []);
+
+  const handleTouchEnd = useCallback(
+    (e: React.TouchEvent) => {
+      if (!touchStartRef.current) return;
+      const touch = e.changedTouches[0];
+      if (!touch) return;
+
+      const deltaX = touch.clientX - touchStartRef.current.x;
+      const deltaY = touch.clientY - touchStartRef.current.y;
+      touchStartRef.current = null;
+
+      // Only trigger if horizontal swipe is dominant
+      if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > SWIPE_THRESHOLD) {
+        if (deltaX < 0) {
+          goNext();
+        } else {
+          goPrev();
+        }
+      }
+    },
+    [goNext, goPrev]
+  );
 
   // Keyboard navigation
   useEffect(() => {
@@ -100,14 +133,20 @@ export default function PhotoCarousel({ photos }: PhotoCarouselProps) {
         }}
       >
         {/* White mat inner padding */}
-        <div className="bg-[#f5f5f5] p-3">
-          <div className="relative bg-[#1a1a1a] rounded-[2px] overflow-hidden flex items-center justify-center" style={{ height: "280px" }}>
+        <div className="bg-[#f5f5f5] p-2 sm:p-3">
+          <div
+            className="relative bg-[#1a1a1a] rounded-[2px] overflow-hidden flex items-center justify-center"
+            style={{ height: "clamp(180px, 40vh, 280px)" }}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={photoUrl}
               alt={currentPhoto?.caption ?? currentPhoto?.filename ?? "Family photo"}
-              className="max-w-full max-h-full object-contain"
+              className="max-w-full max-h-full object-contain pointer-events-none"
               style={{ display: "block" }}
+              draggable={false}
             />
 
             {/* Left arrow */}
@@ -115,7 +154,7 @@ export default function PhotoCarousel({ photos }: PhotoCarouselProps) {
               type="button"
               onClick={goPrev}
               aria-label="Previous photo"
-              className="absolute left-2 top-1/2 -translate-y-1/2 w-[32px] h-[32px] flex items-center justify-center rounded-[4px] border border-[#999] bg-gradient-to-b from-[#fafafa]/90 to-[#d8d8d8]/90 text-[#555] hover:from-[#fff]/95 hover:to-[#e8e8e8]/95 active:from-[#ccc]/90 active:to-[#bbb]/90 transition-all cursor-default"
+              className="absolute left-1.5 sm:left-2 top-1/2 -translate-y-1/2 w-[36px] h-[36px] sm:w-[32px] sm:h-[32px] flex items-center justify-center rounded-[4px] border border-[#999] bg-gradient-to-b from-[#fafafa]/90 to-[#d8d8d8]/90 text-[#555] hover:from-[#fff]/95 hover:to-[#e8e8e8]/95 active:from-[#ccc]/90 active:to-[#bbb]/90 transition-all cursor-default"
               style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.5)" }}
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -128,7 +167,7 @@ export default function PhotoCarousel({ photos }: PhotoCarouselProps) {
               type="button"
               onClick={goNext}
               aria-label="Next photo"
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-[32px] h-[32px] flex items-center justify-center rounded-[4px] border border-[#999] bg-gradient-to-b from-[#fafafa]/90 to-[#d8d8d8]/90 text-[#555] hover:from-[#fff]/95 hover:to-[#e8e8e8]/95 active:from-[#ccc]/90 active:to-[#bbb]/90 transition-all cursor-default"
+              className="absolute right-1.5 sm:right-2 top-1/2 -translate-y-1/2 w-[36px] h-[36px] sm:w-[32px] sm:h-[32px] flex items-center justify-center rounded-[4px] border border-[#999] bg-gradient-to-b from-[#fafafa]/90 to-[#d8d8d8]/90 text-[#555] hover:from-[#fff]/95 hover:to-[#e8e8e8]/95 active:from-[#ccc]/90 active:to-[#bbb]/90 transition-all cursor-default"
               style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.5)" }}
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -141,11 +180,11 @@ export default function PhotoCarousel({ photos }: PhotoCarouselProps) {
 
       {/* Info bar: counter, caption/date, autoplay */}
       <div className="flex items-center justify-between px-1 py-2">
-        <span className="text-[11px] text-[#888] font-[family-name:var(--font-system)] tabular-nums">
+        <span className="text-[12px] sm:text-[11px] text-[#888] font-[family-name:var(--font-system)] tabular-nums">
           {currentIndex + 1} of {photoCount}
         </span>
 
-        <span className="text-[12px] text-[#777] font-[family-name:var(--font-system)] text-center flex-1 px-3 truncate">
+        <span className="text-[13px] sm:text-[12px] text-[#777] font-[family-name:var(--font-system)] text-center flex-1 px-2 sm:px-3 truncate">
           {currentPhoto?.caption ?? ""}
           {currentPhoto?.caption && currentPhoto?.date_taken ? " \u2014 " : ""}
           {currentPhoto?.date_taken ? formatPhotoDate(currentPhoto.date_taken) : ""}
@@ -155,7 +194,7 @@ export default function PhotoCarousel({ photos }: PhotoCarouselProps) {
           type="button"
           onClick={() => setIsPlaying((prev) => !prev)}
           aria-label={isPlaying ? "Pause slideshow" : "Play slideshow"}
-          className="text-[11px] text-[#666] font-[family-name:var(--font-system)] px-2 py-0.5 rounded-[3px] border border-[#bbb] bg-gradient-to-b from-[#fafafa] to-[#e8e8e8] hover:from-[#fff] hover:to-[#eee] active:from-[#ddd] active:to-[#ccc] transition-all cursor-default"
+          className="text-[13px] sm:text-[11px] text-[#666] font-[family-name:var(--font-system)] px-3 sm:px-2 min-h-[36px] sm:min-h-0 py-0.5 rounded-[3px] border border-[#bbb] bg-gradient-to-b from-[#fafafa] to-[#e8e8e8] hover:from-[#fff] hover:to-[#eee] active:from-[#ddd] active:to-[#ccc] transition-all cursor-default"
           style={{ boxShadow: "0 1px 1px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.5)" }}
         >
           {isPlaying ? "\u275A\u275A Pause" : "\u25B6 Play"}
@@ -167,6 +206,7 @@ export default function PhotoCarousel({ photos }: PhotoCarouselProps) {
         className="border border-[#b8b8b8] rounded-[3px] bg-[#e8e8e8] p-1.5 overflow-x-auto"
         style={{
           boxShadow: "inset 0 1px 3px rgba(0,0,0,0.08)",
+          WebkitOverflowScrolling: "touch",
         }}
       >
         <div
@@ -183,7 +223,7 @@ export default function PhotoCarousel({ photos }: PhotoCarouselProps) {
                 type="button"
                 onClick={() => goTo(idx)}
                 aria-label={`View photo ${idx + 1}`}
-                className={`shrink-0 w-[44px] h-[44px] rounded-[2px] overflow-hidden border-2 transition-all cursor-default ${
+                className={`shrink-0 w-[52px] h-[52px] sm:w-[44px] sm:h-[44px] rounded-[2px] overflow-hidden border-2 transition-all cursor-default ${
                   isActive
                     ? "border-[#3d80df] shadow-[0_0_0_1px_#3d80df]"
                     : "border-[#ccc] hover:border-[#999]"

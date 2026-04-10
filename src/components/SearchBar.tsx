@@ -62,7 +62,7 @@ export default function SearchBar({
   const hasText = searchValue.trim().length > 0;
 
   return (
-    <div className="flex items-center gap-2 px-3 py-1.5 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] border-b border-[#b8b8b8]">
+    <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 px-3 py-1.5 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] border-b border-[#b8b8b8]">
       {/* Year dropdown - Mac popup button style */}
       <div className="relative">
         <select
@@ -88,10 +88,10 @@ export default function SearchBar({
         </svg>
       </div>
 
-      <div className="flex-1" />
+      <div className="hidden sm:block flex-1" />
 
       {/* Search field - Mac rounded search */}
-      <form onSubmit={handleSearchSubmit} className="relative">
+      <form onSubmit={handleSearchSubmit} className="relative flex-1 sm:flex-none order-last sm:order-none w-full sm:w-auto">
         <svg
           className="absolute left-2 top-1/2 -translate-y-1/2 text-[#999]"
           width="13"
@@ -111,7 +111,7 @@ export default function SearchBar({
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
           placeholder="Search"
-          className="w-[200px] pl-7 pr-7 py-[3px] bg-white border border-[#aaa] rounded-full text-[12px] text-[#333] placeholder:text-[#aaa] font-[family-name:var(--font-system)] shadow-[inset_0_1px_2px_rgba(0,0,0,0.1)] focus:outline-none focus:border-[#6dacec] focus:shadow-[inset_0_1px_2px_rgba(0,0,0,0.1),0_0_3px_rgba(61,128,223,0.4)]"
+          className="w-full sm:w-[200px] pl-7 pr-7 py-[3px] bg-white border border-[#aaa] rounded-full text-[12px] text-[#333] placeholder:text-[#aaa] font-[family-name:var(--font-system)] shadow-[inset_0_1px_2px_rgba(0,0,0,0.1)] focus:outline-none focus:border-[#6dacec] focus:shadow-[inset_0_1px_2px_rgba(0,0,0,0.1),0_0_3px_rgba(61,128,223,0.4)]"
         />
         {hasText && (
           <button

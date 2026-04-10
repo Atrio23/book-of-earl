@@ -40,6 +40,15 @@ a, button, [role="button"], input[type="submit"], select, label[for],
    Base & Reset
    ============================ */
 
+/* Optimize touch handling */
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button, a, [role="button"] {
+  touch-action: manipulation;
+}
+
 html {
   scroll-behavior: smooth;
   background-color: #8b8b8b;
@@ -456,15 +465,21 @@ body {
     border-top-right-radius: 0;
   }
 
+  .mac-toolbar-btn {
+    padding: 6px 10px;
+    font-size: 0.8125rem;
+    min-height: 44px;
+  }
+
   .email-body {
     overflow-wrap: break-word;
     word-break: break-word;
-    font-size: 0.875rem;
-    line-height: 1.65;
+    font-size: 0.9375rem;
+    line-height: 1.7;
   }
 
   .email-body > p:first-of-type {
-    font-size: 0.9375rem;
+    font-size: 1rem;
   }
 }
 

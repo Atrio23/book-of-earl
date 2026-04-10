@@ -37,7 +37,7 @@ export default function Pagination({
   const rangeEnd = totalItems > 0 ? Math.min(currentPage * pageSize, totalItems) : 0;
 
   const arrowButtonBase =
-    "inline-flex items-center justify-center w-[22px] h-[18px] rounded-[3px] text-[#555] transition-colors";
+    "inline-flex items-center justify-center w-[44px] h-[44px] sm:w-[22px] sm:h-[18px] rounded-[3px] text-[#555] transition-colors";
   const arrowButtonEnabled =
     "bg-gradient-to-b from-[#fafafa] to-[#e8e8e8] border border-[#aaa] shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_1px_1px_rgba(0,0,0,0.06)] hover:from-[#fff] hover:to-[#eee] active:from-[#ddd] active:to-[#d0d0d0]";
   const arrowButtonDisabled = "opacity-30 cursor-default";

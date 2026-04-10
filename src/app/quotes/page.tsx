@@ -113,7 +113,7 @@ export default function QuotesPage() {
   return (
     <div className="page-enter" style={{ fontFamily: '-apple-system, "Lucida Grande", "Helvetica Neue", sans-serif' }}>
       {/* Mac toolbar header */}
-      <div className="border-b border-[#c8c8c8] bg-gradient-to-b from-[#f6f6f6] to-[#e8e8e8] px-6 py-2.5">
+      <div className="border-b border-[#c8c8c8] bg-gradient-to-b from-[#f6f6f6] to-[#e8e8e8] px-4 sm:px-6 py-2.5">
         <div className="mx-auto max-w-[680px]">
           <h1 className="text-[13px] font-bold text-[#333]">Words from Earl</h1>
           <p className="text-[11px] text-[#888] mt-0.5">
@@ -124,7 +124,7 @@ export default function QuotesPage() {
 
       {/* Quote Sections */}
       <div className="bg-white">
-        <div className="mx-auto max-w-[680px] px-6 py-10 space-y-12">
+        <div className="mx-auto max-w-[680px] px-4 sm:px-6 py-6 sm:py-10 space-y-10 sm:space-y-12">
           {THEME_SECTIONS.map((section, sectionIndex) => (
             <section key={section.title}>
               {/* Section heading */}
@@ -140,19 +140,19 @@ export default function QuotesPage() {
                 {section.quotes.map((quote) => (
                   <blockquote
                     key={quote.emailId}
-                    className="border-l-[3px] border-[#999] pl-5 py-1 quote-slide-in"
+                    className="border-l-[3px] border-[#999] pl-3 sm:pl-5 py-1 quote-slide-in"
                   >
-                    <p className="text-[#444] text-[15px] leading-[1.7] italic" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>
+                    <p className="text-[#444] text-[14px] sm:text-[15px] leading-[1.7] italic" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>
                       &ldquo;{quote.text}&rdquo;
                     </p>
-                    <footer className="mt-2 text-[12px] text-[#888]">
+                    <footer className="mt-2 text-[12px] text-[#888] flex flex-wrap items-baseline gap-x-1">
                       <Link
                         href={`/email/${quote.emailId}`}
                         className="text-[#3d80df] hover:underline"
                       >
                         {quote.subject}
                       </Link>
-                      <span className="text-[#ccc] mx-1.5" aria-hidden="true">
+                      <span className="text-[#ccc] mx-0.5 sm:mx-1.5" aria-hidden="true">
                         &middot;
                       </span>
                       <time className="text-[#aaa]">
@@ -173,8 +173,8 @@ export default function QuotesPage() {
       </div>
 
       {/* Closing section */}
-      <div className="border-t border-[#d0d0d0] bg-[#f5f5f5] py-8">
-        <div className="mx-auto max-w-[520px] px-6 text-center">
+      <div className="border-t border-[#d0d0d0] bg-[#f5f5f5] py-6 sm:py-8">
+        <div className="mx-auto max-w-[520px] px-4 sm:px-6 text-center">
           <p className="text-[14px] text-[#666] italic leading-[1.7]" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>
             Every letter Earl wrote was a gift -- a window into a life lived
             with warmth, curiosity, and an abiding love for the people around
