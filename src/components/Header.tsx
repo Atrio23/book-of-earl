@@ -7,6 +7,7 @@ const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/archive", label: "Archive" },
   { href: "/photos", label: "Photos" },
+  { href: "/reviews", label: "Reviews" },
   { href: "/quotes", label: "Quotes" },
   { href: "/about", label: "About" },
 ] as const;
